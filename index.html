@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="">
+    <div class="information-container">
+      <div class="round-time-bar" data-style="smooth">
+        <div id="timer"></div>
+      </div>
+      <div id="point-container" class="point-container">Puntos: 0</div>
+    </div>
+    <div class="stripes-container">
+      <div class="row-indicators-container">
+        <div class="element row-indicator"></div>
+        <div class="element row-indicator"></div>
+        <div class="element row-indicator"></div>
+        <div class="element row-indicator"></div>
+        <div class="element row-indicator"></div>
+      </div>
+      <div class="stripe">
+        <div class="inner-stripe"></div>
+      </div>
+      <div class="stripe">
+        <div class="inner-stripe"></div>
+      </div>
+      <div class="stripe">
+        <div class="inner-stripe"></div>
+      </div>
+      <div class="results-container">
+        <div class="element result-number"></div>
+        <div class="element result-number"></div>
+        <div class="element result-number"></div>
+        <div class="element result-number"></div>
+        <div class="element result-number"></div>
+      </div>
+    </div>
+    <dialog id="instrucions-modal" class="modal">
+      <div class="instructions-wrapper">
+        <h2>¿Cómo jugar?</h2>
+        <div class="instructions-content">
+          <video src="instrucciones.webm" autoplay loop></video>
+          <p>
+            Arrastra las cintas usando tu mouse hasta que el producto de los
+            números sea igual al número indicado. Si es que es correcto la
+            pantalla se pondrá verde y se creará otro problema.
+          </p>
+        </div>
+        <button class="newgame-btn">Comenzar</button>
+      </div>
+    </dialog>
+    <dialog id="gameover-modal" class="modal">
+      <div class="gameover-wrapper">
+        <h2 id="gameover-points">Puntos:</h2>
+        <p class="feedback">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod officia
+          similique eius repudiandae repellendus magnam eos distinctio earum
+          dolorum possimus.
+        </p>
+        <button class="newgame-btn">Jugar de nuevo</button>
+      </div>
+    </dialog>
+    <p class="name">
+      S<span class="blue">t</span>ra<span class="fucsia">i</span>ps
+    </p>
+  </body>
+  <script src="script.js"></script>
+</html>
