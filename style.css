@@ -13,6 +13,9 @@ body {
   width: 100lvw;
   height: 100lvh;
   --bg-color: #dfe6e9;
+  --_total-element-space: calc(100lvh / 6);
+  ---element-space: calc(var(--_total-element-space) * 0.8);
+  ---element-padding: calc(var(--_total-element-space) * 0.1);
   background-color: var(--bg-color);
   overflow: hidden;
 }
@@ -80,6 +83,10 @@ body {
   }
 }
 
+.stripes-container * {
+  outline: 1px solid red;
+}
+
 .stripes-container {
   font-size: 80px;
   position: absolute;
@@ -95,7 +102,7 @@ body {
 .stripe {
   position: relative;
   height: 100lvh;
-  padding: 20px 0;
+  padding: 0px 0;
 }
 
 .row-indicators-container {
@@ -181,6 +188,7 @@ dialog {
   border-radius: 15px;
   margin: 0 auto;
   top: calc(50% - 200px);
+  z-index: 2;
 }
 
 dialog#instrucions-modal {
@@ -240,4 +248,47 @@ dialog .instructions-wrapper .instructions-content video {
 .newgame-btn:hover,
 .newgame-btn:active {
   opacity: 0.75;
+}
+
+@media (pointer: coarse) and (orientation: portrait) {
+  .stripes-container {
+    font-size: 120px;
+    position: absolute;
+    width: 100lvw;
+    top: 20lvh;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .results-container {
+    font-size: 50px;
+  }
+
+  .stripe {
+    width: 100%;
+    height: 180px;
+  }
+
+  :is(.row-indicators-container, .results-container, .inner-stripe) {
+    flex-direction: row;
+    gap: 60px;
+    height: auto;
+    padding: 0 0;
+    width: 100lvw;
+  }
+
+  :is(.row-indicators-container, .results-container, .inner-stripe) .element {
+    height: 100%;
+    width: 120px;
+    height: auto;
+  }
+
+  .row-indicators-container {
+    translate: 0 90px;
+  }
+  .row-indicators-container .element img {
+    rotate: 90deg;
+  }
 }
