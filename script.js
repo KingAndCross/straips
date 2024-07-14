@@ -139,9 +139,9 @@ function newGame() {
   createStripesHTML(columnsValuesArray);
   createObjectiveTotalHTML(objectiveProduct);
   pointsHTML();
+  adjustFontSize();
   columnValuesByPoints();
   setGameTimer();
-  freezeGame();
 }
 
 function checkWin() {
@@ -188,6 +188,8 @@ function winAnimation() {
 instructionsContainer.showModal();
 newGame();
 freezeGame();
+adjustFontSize();
+
 /* 
 ================================
 Utils
@@ -248,6 +250,27 @@ function checkRowProducts(offsetArray) {
   return product;
 }
 
+function adjustFontSize() {
+  const numberContainer = document.querySelectorAll(".number");
+  const resultContainer = document.getElementById("result-number");
+  const fontSize =
+    Math.min(numberContainer[0].clientHeight, numberContainer[0].clientWidth) *
+    0.8;
+  numberContainer.forEach((num) => {
+    const textElement = num.querySelector(".number-text");
+    textElement.style.fontSize = `${fontSize}px`;
+  });
+  resultContainer.style.fontSize = `${fontSize}px`;
+}
+
+function getCurrentNumSpace() {
+  const numberContainer = document.querySelector(".number");
+  if (screenMode === "horizontal") {
+    return numberContainer.clientHeight / 0.8;
+  }
+  return numberContainer.clientWidth / 0.8;
+}
+
 /* 
 ================================
 Game generation functions
@@ -282,7 +305,9 @@ function createStripesHTML(arr) {
     const stripeNumbers = column
       .map(
         (value) =>
-          `<div class="element number">${value !== 1 ? value : "1"}</div>`
+          `<div class="element number"> <p class='number-text'> ${
+            value !== 1 ? value : "1"
+          }</p></div>`
       )
       .join("");
     innerStripes[index].innerHTML = stripeNumbers;
@@ -290,7 +315,7 @@ function createStripesHTML(arr) {
 }
 
 function createObjectiveTotalHTML(objectiveNumber) {
-  resultContainers[2].innerHTML = `<div class="element result-number">= ${objectiveNumber}</div>`;
+  resultContainers[2].innerHTML = `<div id='result-number' class="element result-number"><p> ${objectiveNumber} </p></div>`;
   rowIndicators[2].innerHTML = `<img src="label-important-fill-svgrepo-com.svg" alt="" />
 `;
 }
@@ -300,6 +325,8 @@ function createObjectiveTotalHTML(objectiveNumber) {
 Hookup Listeners
 ================================
 */
+
+window.addEventListener("resize", adjustFontSize);
 
 window.addEventListener("mouseup", () => {
   isDragging = false;
@@ -346,8 +373,8 @@ stripes.forEach((stripe, index) => {
   }
 
   function mouseUp(e) {
-    const numberHeight = 120;
-    const numberWidth = 120 + 60;
+    const numberHeight = getCurrentNumSpace();
+    const numberWidth = getCurrentNumSpace();
     stripe.style.cursor = "grab";
     if (screenMode === "horizontal") {
       let innerTop = innerStripe.getBoundingClientRect().top;
@@ -357,8 +384,8 @@ stripes.forEach((stripe, index) => {
     } else if (screenMode === "vertical") {
       let innerLeft = innerStripe.getBoundingClientRect().left;
       offsetValue = Math.round(innerLeft / numberWidth);
-      console.log(offsetValue);
       let snapPos = offsetValue * numberWidth;
+      console.log(snapPos);
       innerStripe.style.left = `${snapPos}px`;
     }
 

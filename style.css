@@ -8,14 +8,14 @@
 
 body {
   transition: 0.1s ease-in;
-  position: relative;
+  position: fixed;
   margin: 0;
   width: 100lvw;
   height: 100lvh;
   --bg-color: #dfe6e9;
-  --_total-element-space: calc(100lvh / 6);
-  ---element-space: calc(var(--_total-element-space) * 0.8);
-  ---element-padding: calc(var(--_total-element-space) * 0.1);
+  --_total-element-space: calc(100vh / 6);
+  --element-space: calc(var(--_total-element-space) * 0.8);
+  --element-padding: calc(var(--_total-element-space) * 0.2);
   background-color: var(--bg-color);
   overflow: hidden;
 }
@@ -83,10 +83,6 @@ body {
   }
 }
 
-.stripes-container * {
-  outline: 1px solid red;
-}
-
 .stripes-container {
   font-size: 80px;
   position: absolute;
@@ -120,7 +116,8 @@ body {
 .inner-stripe {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding: calc(var(--element-space) / 2) 0;
+  gap: var(--element-padding);
   transition: 0s;
 }
 
@@ -132,21 +129,33 @@ body {
 
 :is(.row-indicators-container, .results-container, .inner-stripe) .element {
   width: 100%;
-  height: 100px;
+  height: var(--element-space);
   text-align: center;
   user-select: none;
   pointer-events: none;
 }
 
-.row-indicator.element,
-.row-indicator.element img {
+.row-indicator.element {
   position: relative;
   width: 100px;
-  height: 100px;
+  height: var(--element-space);
+}
+
+.row-indicator.element img {
+  display: block;
+  margin: auto;
+  height: 100%;
 }
 
 .inner-stripe .number {
   color: var(--bg-color);
+  display: grid;
+  place-items: center;
+}
+
+.inner-stripe .number p {
+  margin: 0;
+  height: 100%;
 }
 
 .stripe .number:active {
@@ -251,6 +260,11 @@ dialog .instructions-wrapper .instructions-content video {
 }
 
 @media (pointer: coarse) and (orientation: portrait) {
+  body {
+    --_total-element-space: calc(100vw / 6);
+    overflow: hidden;
+  }
+
   .stripes-container {
     font-size: 120px;
     position: absolute;
@@ -267,28 +281,100 @@ dialog .instructions-wrapper .instructions-content video {
   }
 
   .stripe {
-    width: 100%;
-    height: 180px;
+    width: 100vw;
+    height: var(--element-space);
   }
 
   :is(.row-indicators-container, .results-container, .inner-stripe) {
     flex-direction: row;
-    gap: 60px;
+    gap: var(--element-padding);
     height: auto;
-    padding: 0 0;
+    padding: 0 calc(var(--element-space) / 2);
     width: 100lvw;
   }
 
   :is(.row-indicators-container, .results-container, .inner-stripe) .element {
     height: 100%;
-    width: 120px;
+    width: var(--element-space);
     height: auto;
   }
 
   .row-indicators-container {
-    translate: 0 90px;
+    translate: 0 10px;
   }
+
+  .row-indicator.element {
+    height: var(--element-space);
+    width: var(--element-space);
+  }
+
   .row-indicators-container .element img {
     rotate: 90deg;
+  }
+
+  #result-number p {
+    white-space: nowrap;
+    scale: 0.8;
+  }
+
+  .information-container {
+    width: 90lvw;
+    padding: 0 50px;
+    right: 0;
+    box-sizing: border-box;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .information-container .point-container {
+    margin: 0px;
+  }
+
+  .information-container .round-time-bar {
+    height: 15px;
+    width: 100%;
+    padding: 2px 2px;
+    border: 3px solid black;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+  }
+
+  .information-container .round-time-bar div {
+    height: 15px;
+    width: 100%;
+    background: black;
+    border-radius: 10px;
+    animation-name: roundtime;
+    animation-duration: calc(var(--duration) * 1s);
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    transform-origin: right center;
+  }
+
+  dialog .instructions-wrapper .instructions-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin: 0 30px;
+  }
+
+  dialog {
+    width: 80lvw;
+    border-radius: 15px;
+    margin: 0 auto;
+    top: 20%;
+    z-index: 2;
+  }
+
+  dialog#instrucions-modal {
+    width: 80lvw;
+  }
+
+  dialog#gameover-modal {
+    width: 80lvw;
   }
 }
